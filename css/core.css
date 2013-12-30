@@ -74,7 +74,7 @@ button {
 }
 
 .section .controls button {
-  height: 44px;
+  height: 64px;
   margin: 5px 0 0 5px;
   padding: 0;
   width: 47.5%;
@@ -107,7 +107,7 @@ button {
 .pause-container .button-container button {
   background: rgb(251, 204, 9);
   background: rgba(251. 204, 9, 1);
-  height: 44px;
+  height: 64px;
   margin: 10px 0 0 10px;
   width: 100%;
 }

@@ -3,14 +3,14 @@
   
   // setup fix text resizing
   $('.ui-timer').find('.ui-timer-display').each(function () {
-    $(this).text(moment(0, 'milliseconds').format('ss:mm')).fitText(0.45)
+    $(this).text(moment(0, 'milliseconds').format('ss:mm')).fitText(0.8)
   });
 
   // $('button').each(function () {
   //   $(this).fitText(1.5);
   // });
   
-  function createTimerInterval($start, $display, $reset, duration) {
+  function createTimerInterval($start, $display, $reset, $timerAmounts, duration) {
     var durationMilliseconds = duration.asMilliseconds(),
       intervalId;
 
@@ -36,11 +36,13 @@
         $display.data('current', '');
         $display.removeClass('alert');
         $start.prop('disabled', false).removeClass('disabled');
+        $timerAmounts.prop('disabled', false).removeClass('disabled');
       }
     }, interval);
     
     $reset.data('interval-id', intervalId);
     $start.prop('disabled', true).addClass('disabled');
+    $timerAmounts.prop('disabled', true).addClass('disabled');
   }
 
   $('.ui-timer').on('touchstart', '.ui-start-timer', function () {
@@ -48,12 +50,13 @@
       $container = $start.closest('.ui-timer'),
       $display = $container.find('.ui-timer-display'),
       $reset = $container.find('.ui-reset-timer'),
+      $timerAmounts = $container.find('.ui-timer-amount'),
       minutes = parseInt($container.find('.ui-timer-amount.active').data('minutes')),
       milliseconds = minutes * 60 * 1000,
       duration = moment.duration(milliseconds, 'milliseconds');
     
     if (!$start.prop('disabled')) {
-      createTimerInterval($start, $display, $reset, duration);
+      createTimerInterval($start, $display, $reset, $timerAmounts, duration);
     }
   });
 
@@ -61,16 +64,22 @@
     var $reset = $(this),
       $container = $reset.closest('.ui-timer'),
       $display = $container.find('.ui-timer-display'),
+      $timerAmounts = $container.find('.ui-timer-amount'),
       $start = $container.find('.ui-start-timer');
 
     clearInterval($reset.data('intervalId'));
     $display.text(moment(moment.duration(0, 'milliseconds')).format('mm:ss'));
     $display.removeClass('alert');
     $start.prop('disabled', false).removeClass('disabled');
+    $timerAmounts.prop('disabled', false).removeClass('disabled');
   });
 
   $('.ui-timer').on('touchstart', '.ui-timer-amount', function () {
-    $(this).parent().children().removeClass('active').end().end().addClass('active');
+    var $el = $(this);
+
+    if (!$el.prop('disabled')) {
+      $el.parent().children().removeClass('active').end().end().addClass('active');
+    }
   });
 
   $('.ui-pause-all').on('touchstart', function () {
@@ -84,14 +93,15 @@
         var $container = $(this),
           $display = $container.find('.ui-timer-display'),
           current = $display.data('current'),
-          $start, $reset, minutes, milliseconds, duration;
+          $start, $reset, $timerAmounts, minutes, milliseconds, duration;
 
         if (current) {
           $start = $container.find('.ui-start-timer');
           $reset = $container.find('.ui-reset-timer');
+          $timerAmounts = $container.find('.ui-timer-amount');
           duration = moment.duration(current, 'milliseconds');
           
-          createTimerInterval($start, $display, $reset, duration);
+          createTimerInterval($start, $display, $reset, $timerAmounts, duration);
         }
       });
     } else {
