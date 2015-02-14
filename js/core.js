@@ -45,7 +45,7 @@
     $timerAmounts.prop('disabled', true).addClass('disabled');
   }
 
-  $('.ui-timer').on('touchstart', '.ui-start-timer', function () {
+  $('.ui-timer').on('click', '.ui-start-timer', function () {
     var $start = $(this),
       $container = $start.closest('.ui-timer'),
       $display = $container.find('.ui-timer-display'),
@@ -60,7 +60,7 @@
     }
   });
 
-  $('.ui-timer').on('touchstart', '.ui-reset-timer', function () {
+  $('.ui-timer').on('click', '.ui-reset-timer', function () {
     var $reset = $(this),
       $container = $reset.closest('.ui-timer'),
       $display = $container.find('.ui-timer-display'),
@@ -74,7 +74,7 @@
     $timerAmounts.prop('disabled', false).removeClass('disabled');
   });
 
-  $('.ui-timer').on('touchstart', '.ui-timer-amount', function () {
+  $('.ui-timer').on('click', '.ui-timer-amount', function () {
     var $el = $(this);
 
     if (!$el.prop('disabled')) {
@@ -82,7 +82,7 @@
     }
   });
 
-  $('.ui-pause-all').on('touchstart', function () {
+  $('.ui-pause-all').on('click', function () {
     var $pauseButton = $(this),
       $container, minutes, milliseconds, $display, duration, intervalId;
     
